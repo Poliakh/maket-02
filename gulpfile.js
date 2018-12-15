@@ -1,6 +1,4 @@
 // основная конфигурация от 29/11/2018 v2.0
-
-
 let gulp			= require ('gulp'),
 	sass			= require('gulp-sass'),
 	sourcemaps		= require('gulp-sourcemaps'),
@@ -23,6 +21,32 @@ let gulp			= require ('gulp'),
 	util			= require('gulp-util');
 
 	
+	let path = {
+		build: { //Тут мы укажем куда складывать готовые после сборки файлы
+			html:	'build/',
+			js:		'build/script/',
+			style:	'build/css/',
+			img:	'build/img/',
+			fonts:	'build/fonts/'
+		},
+		src: { //Пути откуда брать исходники
+			html:	'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
+			js:		'src/script/**/*.js',//В стилях и скриптах нам понадобятся только main файлы
+			scss:	'src/scss/style.scss',
+			css:	'src/css/**/*.css',
+			img:	'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
+			fonts:	'src/fonts/**/*.*'
+		},
+		watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
+			html:	'src/**/*.html',
+			js:		'src/js/**/*.js',
+			scss:	'src/style/**/*.scss',
+			css:	'src/style/**/*.scss',
+			img:	'src/img/**/*.*',
+			fonts:	'src/fonts/**/*.*'
+		},
+		clean: 'build'
+	};
 gulp.task('my', () => {
 	console.log('hello world!!!');
 	// content
@@ -31,6 +55,7 @@ gulp.task('my', () => {
 // watch
 gulp.task('default',['build','server'], () => {
 	gulp.watch(path.src.html, ['htmlmin']);
+	gulp.watch('src/blocks/*.html', ['htmlmin']);
 	gulp.watch(path.src.scss, ['sass']);
 	gulp.watch(path.src.js, ['script']);
 	gulp.watch(path.src.img, ['img']);
@@ -42,11 +67,11 @@ gulp.task('build',['clean','htmlmin','sass','script','img'], () => {
 		.pipe(gulp.dest(path.build.fonts));
 });
 
-
+//posthtml-include, posthtml-minifier или htmlnano.
 gulp.task('htmlmin', () => {
 	gulp.src(path.src.html)
 		.pipe(plumber())
-		.pipe(gulpImport('demo/components/'))
+		.pipe(gulpImport('src/blocks/'))
 		.pipe(htmlMin({
 			// collapseWhitespace: true,
 			removeComments: true
@@ -145,30 +170,5 @@ gulp.task('clear',  () => {
 	cache.clearAll();
 })
 
-let path = {
-	build: { //Тут мы укажем куда складывать готовые после сборки файлы
-		html:	'build/',
-		js:		'build/script/',
-		style:	'build/css/',
-		img:	'build/img/',
-		fonts:	'build/fonts/'
-	},
-	src: { //Пути откуда брать исходники
-		html:	'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
-		js:		'src/script/**/*.js',//В стилях и скриптах нам понадобятся только main файлы
-		scss:	'src/scss/**/*.scss',
-		css:	'src/css/**/*.css',
-		img:	'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
-		fonts:	'src/fonts/**/*.*'
-	},
-	watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-		html:	'src/**/*.html',
-		js:		'src/js/**/*.js',
-		scss:	'src/style/**/*.scss',
-		css:	'src/style/**/*.scss',
-		img:	'src/img/**/*.*',
-		fonts:	'src/fonts/**/*.*'
-	},
-	clean: 'build'
-};
+
 

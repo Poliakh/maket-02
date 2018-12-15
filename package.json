@@ -9,8 +9,8 @@
   "author": "Drum",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
@@ -30,6 +30,6 @@
     "gulp-uglifyjs": "^0.6.2",
     "gulp-util": "^3.0.8",
     "imagemin-pngquant": "^6.0.0",
-    "node-sass": "^4.10.0"
+    "node-sass": "^4.11.0"
   }
 }

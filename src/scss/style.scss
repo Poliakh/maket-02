@@ -1,6 +1,25 @@
-body{
-	background-color: bisque
+@import"../fonts/stylesheet.css";
+@import "header.scss";
+
+.wrapper{
+	min-width:750px;
 }
-h1{
-	color: aquamarine
+
+// .wrapper {
+// 	font-family: 'MyriadPro';
+// 	color:$colFont;
+// 	min-width: 870px;
+// }
+
+.container{
+	max-width:1024px;
+	margin-right: auto;
+	margin-left: auto;
+	// background-color: antiquewhite
+}
+
+.cf::after {
+	display: block;
+	content: "";
+	clear: both;
 }
