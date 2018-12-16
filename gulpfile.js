@@ -40,8 +40,8 @@ let gulp			= require ('gulp'),
 		watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
 			html:	'src/**/*.html',
 			js:		'src/js/**/*.js',
-			scss:	'src/style/**/*.scss',
-			css:	'src/style/**/*.scss',
+			scss:	'src/scss/**/*.scss',
+			css:	'src/css/**/*.css',
 			img:	'src/img/**/*.*',
 			fonts:	'src/fonts/**/*.*'
 		},
@@ -54,11 +54,11 @@ gulp.task('my', () => {
 
 // watch
 gulp.task('default',['build','server'], () => {
-	gulp.watch(path.src.html, ['htmlmin']);
-	gulp.watch('src/blocks/*.html', ['htmlmin']);
-	gulp.watch(path.src.scss, ['sass']);
-	gulp.watch(path.src.js, ['script']);
-	gulp.watch(path.src.img, ['img']);
+	gulp.watch(path.watch.html, ['htmlmin']);
+	// gulp.watch('src/blocks/*.html', ['htmlmin']);
+	gulp.watch(path.watch.scss, ['sass']);
+	gulp.watch(path.watch.js, ['script']);
+	gulp.watch(path.watch.img, ['img']);
 });
 
 //Сборка проекта

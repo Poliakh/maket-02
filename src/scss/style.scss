@@ -1,15 +1,24 @@
 @import"../fonts/stylesheet.css";
-@import "header.scss";
+
+// ArialBold
+// MyriadPro
+// ArialMT
+// LatoBlack
+// LatoRegular
+$bgf:#e8ebf1;
+$bgs:#81e4ed;
+$icon:#2aacc8;
+
+* {
+	margin: 0;
+	padding: 0;
+}
 
 .wrapper{
 	min-width:750px;
+	// font-family: LatoBlack;
+	// box-sizing: content-box;
 }
-
-// .wrapper {
-// 	font-family: 'MyriadPro';
-// 	color:$colFont;
-// 	min-width: 870px;
-// }
 
 .container{
 	max-width:1024px;
@@ -18,8 +27,18 @@
 	// background-color: antiquewhite
 }
 
-.cf::after {
+.cf:after {
 	display: block;
 	content: "";
 	clear: both;
 }
+
+_res{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+body{
+	background-color: rgb(153, 46, 46);
+}
+@import "header.scss";
+
