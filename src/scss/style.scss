@@ -8,6 +8,7 @@
 $bgf:#e8ebf1;
 $bgs:#81e4ed;
 $icon:#2aacc8;
+$link:#5dbdd3;
 
 * {
 	margin: 0;
@@ -22,8 +23,7 @@ $icon:#2aacc8;
 
 .container{
 	max-width:1000px;
-	margin-right: auto;
-	margin-left: auto;
+	margin: 0 auto;
 	padding-right: 12px;
 	padding-left: 12px;
 	// background-color: antiquewhite
@@ -44,4 +44,5 @@ body{
 }
 @import "header.scss";
 @import "banner.scss";
+@import "info.scss";
 
