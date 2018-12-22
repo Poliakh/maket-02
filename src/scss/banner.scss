@@ -1,6 +1,43 @@
 .banner{
 	background-color: $bgs;
 	min-height: 500px;
-	
-	
+	border-top: 1px solid rgba(100, 100, 100, 0.411);
+
+	&__slider{
+		margin-top: 20px;
+	}
+}
+.slide{
+	min-height: 440px;
+	background: url(../img/layer-4a.png) no-repeat right,
+	url(../img/paper-coffee-cup-512x512.png) no-repeat 419px 3px;
+	background-color: #df5936;
+	 
+	&__text{
+		padding-top:90px;
+		margin-left: 61px;
+		width: 320px;
+		min-height: 219px;
+		font-family: LatoBlack;
+		font-size: 50px;
+		color: white;
+		text-align: left;
+	}
+
+}
+
+.navPoint{
+		padding-top: 12px;
+		padding-bottom: 14px;
+		text-align: center;
+		font-size: 0;
+		margin: 0 auto;
+}
+.point{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background-color: #71a3a7;
+	border-radius: 50%;
+	margin:0 8px;
 }

@@ -15,15 +15,17 @@ $icon:#2aacc8;
 }
 
 .wrapper{
-	min-width:750px;
+	min-width:870px;
 	// font-family: LatoBlack;
 	// box-sizing: content-box;
 }
 
 .container{
-	max-width:1024px;
+	max-width:1000px;
 	margin-right: auto;
 	margin-left: auto;
+	padding-right: 12px;
+	padding-left: 12px;
 	// background-color: antiquewhite
 }
 
