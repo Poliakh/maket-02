@@ -3,21 +3,21 @@
 	border-bottom:1px solid #616161;
 }
 .header {
-	min-height: 107px;
+	min-height: 120px;
 
 	&__logo{
-		margin-top: 19px;
-		margin-left: 63px;
+		margin-top: 25px;
+		margin-left: 19px;
 	}
 	&__nav{
-		margin-right: 64px;
-		margin-top: 35px;
+		margin-right: 1px;
+		margin-top: 41px;
 	}
 }
 
 .logo{
 	text-transform: capitalize;
-	font-size: 46px;
+	font-size: 50px;
 	float: left;
 	&__bis{
 		display: inline-block;
@@ -28,7 +28,7 @@
 		font-family:  LatoRegular;
 		color:$icon;
 		position: relative;
-		right: 13px;
+		right: 10px;
 	}
 }
 .subMenu{
@@ -39,16 +39,18 @@
 	height: 0;
 	overflow: hidden;
 	transition: 0.15s;
-	width:174px;
+	min-width:200px;
 	background-color: #fff;
-	border-bottom: 5px solid $icon;
 	border-radius:0 0 2px 2px;
+	// box-sizing: content-box;
+	transition: 0.2s;
+
 
 	&__item{
 		white-space: nowrap;
-		padding-left: 13px;
+		padding-left: 18px;
 		padding-bottom: 9px;
-		padding-top: 9px;
+		padding-top: 11px;
 		color:#000;
 		border-bottom:1px solid #9b9b9b;
 		transition: 0.15s;
@@ -65,17 +67,17 @@
 		}
 
 	&:first-child{
-		padding-top: 17px;
+		padding-top: 24px;
 	}
 	
 }
 	
 }
 
-.nav__item .sub{
-	// position: relative;
-	padding-right: 5px;
-}
+// .nav__item .sub{
+// 	// position: relative;
+// 	padding-right: 5px;
+// }
 .sub:hover .arr::after{
 	transform: rotate( 585deg);
 	transition: all 1s;
@@ -103,14 +105,14 @@
 .nav{
 	text-transform: uppercase;
 	font-family: ArialBold;
-	font-size: 12px;
+	font-size: 13px;
 	float:right;
 
 	&__item{
 		display: inline-block;
 		list-style-type: none;
-		padding: 7px 18.5px 7px;
-		margin-left: 2px;
+		padding: 7px 20.5px 7px;
+		// margin-left: 2px;
 		border-top: 5px solid rgba(128, 128, 128, 0);
 		border-bottom: 5px solid rgba(128, 128, 128, 0);
 		cursor: pointer;
@@ -131,8 +133,9 @@
 		}
 		&:hover .subMenu{
 			opacity: 1;
-			height: 170px;
-			transition: 0.2s;
+			height: 202px;
+			border-bottom: 5px solid $icon;
+			transition: 0.2s height;
 		}
 	}
 	&__link{
@@ -149,10 +152,10 @@
 	}
 }
 .nav__item.sub{
-	padding-left: 8px;
+	padding-left: 10px;
 	margin-left: 12px;
-	padding-right: 20px;
-	margin-right: -1px;
+	padding-right: 15px;
+	// margin-right: -1px;
 	position: relative;
 	&:hover{
 		border-bottom: 5px solid #80808000;
