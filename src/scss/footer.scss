@@ -1,0 +1,169 @@
+
+.footer{
+	background-color: $bgf;
+	border-top: 1px solid $bgf * 0.9;
+	font-size: 14px;
+	min-height: 330px;
+	font-family: ArialMT;
+	&__logo{
+		float: right;
+		position: relative;
+		bottom: 14px;
+		transition: 0.2s;
+		&:hover{
+			transform: scale(1.05);
+			transition: 0.3s;
+		}
+	}
+}
+.firstline{
+	margin-top: 30px;
+}
+
+.fupc{
+	text-transform: uppercase;
+	font-size: 15px;
+	font-family: ArialBold;
+}
+.dib{
+	display: inline-block;
+	vertical-align: top;
+
+}
+.about{
+	width: 233px;
+	padding-right: 10px;
+	margin-right: 5%;
+	&__text{
+		margin-top: 22px;
+		text-align: justify;
+	}
+}
+.item{
+	list-style-type: none;
+	white-space: nowrap;
+}
+.link{
+	text-decoration: none;
+	color: inherit;
+	white-space: nowrap;
+
+}
+.explore{
+	// width: 80px;
+	margin-right: 7%;
+	&__item{
+		margin-top: 3px;
+		line-height: 24px;
+		&:hover .explore__link {
+			text-decoration: underline;
+			text-shadow: 0 0 5px #00000025;
+		}
+	}
+}
+.browse{
+	// width: 104px;
+	margin-right: 7%;
+	&__item{
+		white-space: nowrap;
+		margin-top: 3px;
+		line-height: 24px;
+		&:hover .browse__link {
+			text-decoration: underline;
+			text-shadow: 0 0 5px #00000025;
+		}
+	}
+}
+.contact{
+	// width: 135px;
+	margin-right: 6%;
+	&__menu{
+		margin-top: 15px;
+	}
+	&__item{
+		line-height: 18px;
+
+
+	}
+	&__phone{
+		margin-top: 15px;
+	}
+}
+.connect{
+	max-width: 180px;
+	&__link{
+		width: 53px;
+		height: auto;
+		&:hover.i::before{
+			transform: scale(1.1);
+			transition: 0.3s;
+
+		}
+	}
+	&__icon{
+		margin-top: 15px;
+		margin-right: -10.5px;
+		margin-left: -10.5px;
+	}
+
+}
+.copypast{
+	max-width: 640px;
+
+}
+.lastline{
+	margin-top: 37px;
+	margin-bottom: 58px;
+}
+%icon{
+			content: '';
+		display: inline-block;
+		width: 53px;
+		height: 53px;
+		border-radius: 50%;
+		background: url("../img/facebook.png") no-repeat center ;
+		background-size: 47px;
+		background-repeat: no-repeat;
+		margin: 0 4.5px;
+		transition: 0.3s;
+}
+.dribbble{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/dribbble.png");
+		background-repeat: no-repeat;
+	}
+}
+.facebook{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/facebook.png");
+
+	}
+}
+.pinterest{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/pinterest.png"); 
+
+	}
+}
+.linkedin{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/linkedin.png"); 
+
+	}
+}
+.skype{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/skype.png"); 
+	}
+}
+.share{
+	&::before{
+		@extend %icon;
+		background-image: url("../img/share.png"); 
+	}
+}

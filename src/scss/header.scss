@@ -7,6 +7,12 @@
 
 	&__logo{
 		margin-top: 25px;
+		float: left;
+		transition: 0.15s;
+		&:hover{
+			transform: scale(1.05);
+			transition: 0.5s;
+		}
 
 		// margin-left: 19px;
 	}
@@ -19,7 +25,6 @@
 .logo{
 	text-transform: capitalize;
 	font-size: 0px;
-	float: left;
 	display: block;
 	color: inherit;
 	border-style: none;
@@ -32,7 +37,7 @@
 	}
 	&__lite{
 		display: inline-block;
-		font-family:  LatoRegular;
+		font-family: LatoRegular;
 		color:$icon;
 		position: relative;
 		// right: 10px;
