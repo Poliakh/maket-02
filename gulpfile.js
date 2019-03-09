@@ -14,7 +14,9 @@ let gulp			= require ('gulp'),
 	del				= require('del'),				//удаляет папку проекта
 	plumber			= require('gulp-plumber'),		// обработчик ошибок
 	notify			= require('gulp-notify'),
-
+	cleanCSS		= require('gulp-clean-css'),
+	gulpif			= require('gulp-if'),
+	argv 			= require('yargs').argv,
 	imagemin		= require('gulp-imagemin'), // Подключаем библиотеку для работы с изображениями
     pngquant		= require('imagemin-pngquant'), // Подключаем библиотеку для работы с png
 	cache			= require('gulp-cache'), // Подключаем библиотеку кеширования
@@ -30,6 +32,8 @@ let gulp			= require ('gulp'),
 			fonts:	'build/fonts/'
 		},
 		src: { //Пути откуда брать исходники
+			src:'src/',
+			block:'src/blocks/',
 			html:	'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
 			js:		'src/script/**/*.js',//В стилях и скриптах нам понадобятся только main файлы
 			scss:	'src/scss/style.scss',
@@ -39,28 +43,43 @@ let gulp			= require ('gulp'),
 		},
 		watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
 			html:	'src/**/*.html',
-			js:		'src/js/**/*.js',
+			block:	'src/blocks',
+			js:		'src/script/**/*.js',
 			scss:	'src/scss/**/*.scss',
 			css:	'src/css/**/*.css',
 			img:	'src/img/**/*.*',
 			fonts:	'src/fonts/**/*.*'
 		},
-		clean: 'build'
+		dir: 'build',
+		produc:'../poliakh.github.io/bislite',
+		test : 'test'
 	};
+	
 gulp.task('my', () => {
 	console.log('hello world!!!');
 	// content
 });
-
 // watch
-gulp.task('default',['build','server'], () => {
+gulp.task('default',['build','server'], ()=>{
 	gulp.watch(path.watch.html, ['htmlmin']);
-	// gulp.watch('src/blocks/*.html', ['htmlmin']);
 	gulp.watch(path.watch.scss, ['sass']);
 	gulp.watch(path.watch.js, ['script']);
 	gulp.watch(path.watch.img, ['img']);
 });
-
+//-------------- для запуска версии prodaction-----------------
+//	gulp build --prod  - создает версию с компрессией
+//	gulp prod - переносит в папку  prodaction
+//---------------------end-----------------------------------
+gulp.task('ex',['build','prod'], ()=>{
+	// gulp.start('prod')
+	// gulp.src(path.dir)
+	// .pipe(gulp.dest(path.produc));
+	// .pipe(gulpif(argv.prod, gulp.dest(path.produc)));
+})
+gulp.task('prod',['cleanProd'],()=>{
+	gulp.src(path.dir+'/**/*.*')
+		.pipe(gulp.dest(path.produc));
+});
 //Сборка проекта
 gulp.task('build',['clean','htmlmin','sass','script','img'], () => {
 	gulp.src(path.src.fonts)
@@ -69,40 +88,41 @@ gulp.task('build',['clean','htmlmin','sass','script','img'], () => {
 
 //posthtml-include, posthtml-minifier или htmlnano.
 gulp.task('htmlmin', () => {
-	gulp.src(path.src.html)
-		.pipe(plumber())
-		.pipe(gulpImport('src/blocks/'))
-		.pipe(htmlMin({
-			// collapseWhitespace: true,
-			removeComments: true
-		}))
-		.pipe(gulp.dest(path.build.html))
-		.pipe(browserSync.reload({stream:true}));
+	gulp.src(path.src.html)		.pipe(sourcemaps.init())
+	.pipe(plumber())
+	.pipe(gulpImport(path.src.block))
+	.pipe(gulpImport(path.src.block))
+	.pipe(gulpImport(path.src.block + 'other/'))
+	.pipe(gulpif(argv.prod,
+		htmlMin({collapseWhitespace: true,removeComments: true})))
+	.pipe(gulpif(!argv.prod, sourcemaps.write()))
+	.pipe(gulp.dest(path.build.html))
+	.pipe(browserSync.reload({stream:true}));
+
 });
 
 //style
 gulp.task('sass', () => {
 	gulp.src(path.src.scss)
 	.pipe(sourcemaps.init())
-	.pipe( sass().on( 'error', notify.onError(//второе решение
-			{
-				message: "<%= error.message %>",
-				title  : "Sass Error!",
-			} ),util.beep() )
-		)
-	// .pipe(plumber())
-		// .pipe(sass({
-		// 	outputStyle: 'compressed'
-		// 	}))
-		// 	.on('error', sass.logError)
-		.pipe(concat('style.css'))
-		//.pipe(cssnano())
-		.pipe(autoprefixer(
-			['last 3 version', '> 1%', 'ie 8', 'ie 7'],
-			{cascade: true}))
-		.pipe(sourcemaps.write())
+	.pipe( sass()
+			.on( 'error', notify.onError(
+				{
+					message: "<%= error.message %>",
+					title  : "Sass Error!",
+				} )
+			))
+	.pipe(autoprefixer(
+		['last 3 version', '> 1%', 'ie 8', 'ie 7'],
+		{cascade: true}))
+		// .pipe(cssnano())
+		.pipe(gulpif(argv.prod, cleanCSS({debug: true}, (details) => {
+			console.log(`${details.name}: ${details.stats.originalSize}`);
+			console.log(`${details.name}: ${details.stats.minifiedSize}`);
+		})))
+		.pipe(gulpif(!argv.prod, sourcemaps.write('.')))
 		.pipe(gulp.dest(path.build.style))
-		.pipe(browserSync.reload({stream:true}));
+		.pipe(browserSync.reload({stream:true}))
 });
 
 function errorHandler(error) {
@@ -127,17 +147,17 @@ function errorHandler(error) {
 //script
 gulp.task('script', () => {
 	gulp.src(path.src.js)
-		.pipe(sourcemaps.init())
-		.pipe(plumber())
-		.pipe(concat('script.js'))
-		.pipe(babel({
-			presets: ['@babel/env']
-		}))
-		.pipe(uglify())//минимазция js
-		.pipe(sourcemaps.write())
-		.pipe(gulp.dest(path.build.js))
-		.pipe(browserSync.reload({stream:true}));
-});
+	.pipe(sourcemaps.init())
+	.pipe(plumber())
+	.pipe(concat('script.js'))
+	// .pipe(babel({
+	// 	presets: ['@babel/env']
+	// }))
+	.pipe(gulpif(argv.prod, uglify()))//минимазция js
+	.pipe(gulpif(!argv.prod, sourcemaps.write()))
+	.pipe(gulp.dest(path.build.js))
+		// .pipe(browserSync.reload({stream:true})); //незачем
+	});
 
 gulp.task('server',() => {
 	browserSync({
@@ -149,20 +169,35 @@ gulp.task('server',() => {
 });
 
 gulp.task('img', () => {
-	gulp.src(path.src.img) // Берем все изображения из src
-		.pipe(cache(imagemin({  // Сжимаем их с наилучшими настройками с учетом кеширования
-			interlaced: true,
-			progressive: true,
-			svgoPlugins: [{removeViewBox: false}],
-			use: [pngquant()]
-		})))
-		.pipe(gulp.dest(path.build.img)) // Выгружаем на продакшен
+	gulp.src(path.src.img)
+		.pipe(cache(imagemin([
+			imagemin.gifsicle({interlaced: true}),
+			imagemin.jpegtran({progressive: true}),
+			imagemin.optipng({optimizationLevel: 5}),
+			imagemin.svgo({
+				plugins: [
+					{removeViewBox: true},
+					{cleanupIDs: false}
+				]
+			})
+		])))
+		.pipe(gulp.dest(path.build.img))
 		.pipe(browserSync.reload({stream:true}));
 });
 
 //удаление папки дистрибутива
-gulp.task('clean', () => {
-	del.sync(path.clean)
+gulp.task('clean', ()=>{
+	del.sync(path.dir);
+});
+gulp.task('cleanProd', ()=>{
+	del.sync(
+			["../poliakh.github.io/bislite/css"],
+			["../poliakh.github.io/bislite/fonts"],
+			["../poliakh.github.io/bislite/img"],
+			["../poliakh.github.io/bislite/preview"],
+			["../poliakh.github.io/bislite/script"],
+			["../poliakh.github.io/bislite/index.html"],
+	{'force':true});
 });
 
 //чистка кеша в случае проблемс картинками например.

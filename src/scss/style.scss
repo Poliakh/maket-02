@@ -35,7 +35,7 @@ $link:#5dbdd3;
 	clear: both;
 }
 
-_res{
+.res{
 	margin-top: 0;
 	margin-bottom: 0;
 }
@@ -45,12 +45,12 @@ _res{
 	min-height: 757px /* удалить эту строку */
 }
 
-@import "header.scss";
-@import "banner.scss";
-@import "info.scss";
+@import "header";
+@import "banner";
+@import "info";
 
-@import "lworks.scss";
-@import "client.scss";
-@import "download.scss";
-@import "footer.scss";
+@import "lworks";
+@import "client";
+@import "download";
+@import "footer";
 
